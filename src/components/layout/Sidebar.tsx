@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useApp, ROLES, NAV } from '../../context/AppContext';
 import type { AppRole, PageId } from '../../data/types';
+import { ChevronDown } from 'lucide-react';
 
 export function Sidebar() {
-  const { db, setDB, currentPage, navigate, toast } = useApp();
+  const { db, setDB, currentPage, navigate, toast, sidebarOpen, setSidebarOpen } = useApp();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const role = db.currentRole;
   const r = ROLES[role];
@@ -27,7 +28,9 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="sidebar" id="sidebar">
+    <>
+      <div className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)} />
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} id="sidebar">
       {/* Brand */}
       <div className="sidebar-brand">
         <div className="brand-mark">B</div>
@@ -44,7 +47,7 @@ export function Sidebar() {
             <div className="rs-eyebrow">Viewing as</div>
             <div className="rs-current">{r.icon} {r.title}</div>
           </div>
-          <span style={{ fontSize: 10 }}>▾</span>
+          <ChevronDown size={14} />
         </button>
         <div className={`role-dropdown ${dropdownOpen ? 'open' : ''}`}>
           {(Object.keys(ROLES) as AppRole[]).map(k => (
@@ -68,7 +71,7 @@ export function Sidebar() {
               <div
                 key={item.id}
                 className={`nav-item ${currentPage === item.id ? 'active' : ''}`}
-                onClick={() => navigate(item.id as PageId)}
+                onClick={() => { navigate(item.id as PageId); setSidebarOpen(false); }}
               >
                 <span className="nav-icon">{item.icon}</span>
                 <span>{item.label}</span>
@@ -87,6 +90,7 @@ export function Sidebar() {
           <div className="user-role">{r.desc}</div>
         </div>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

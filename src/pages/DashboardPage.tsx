@@ -1,6 +1,7 @@
 import { useApp } from '../context/AppContext';
 import { TierBadge, StatusBadge, StockBar, StatCard } from '../components/ui/Badge';
 import { fmtINR, fmtDate, todayStr, sumStaff } from '../data/db';
+import { Hand, FileText, PartyPopper, Users, ClipboardList, ArrowRight, Banknote, CheckCircle, MessageCircle, Star, Package, AlertTriangle, Truck, MapPin, Check } from 'lucide-react';
 
 export function DashboardPage() {
   const { db } = useApp();
@@ -22,31 +23,30 @@ function AdminDashboard() {
     <>
       <div className="page-head">
         <div>
-          <h1>Welcome back, Priya 👋</h1>
+          <h1>Welcome back, Priya <Hand size={24} className="inline ml-2 text-amber-500" /></h1>
           <div className="page-desc">Here's what's happening across all events today, {todayStr()}.</div>
         </div>
         <div className="head-actions">
-          <button className="btn btn-outline" onClick={() => navigate('quotations')}>📝 New Quotation</button>
+          <button className="btn btn-outline" onClick={() => navigate('quotations')}><FileText size={16} className="inline mr-2" /> New Quotation</button>
           <button className="btn btn-gold" onClick={() => navigate('events')}>+ New Event</button>
         </div>
       </div>
 
       <div className="stat-grid">
-        <StatCard icon="🎉" value={String(upcoming)} label="Upcoming Events" delta="↑ 2 vs last week" deltaDir="up" />
-        <StatCard icon="📝" value={fmtINR(totalQuoteVal)} label="Active Quotation Value" delta="↑ 12.4%" deltaDir="up" />
-        <StatCard icon="👥" value={String(activeStaff)} label="Active Staff" delta="↑ 3 this month" deltaDir="up" />
-        <StatCard icon="📋" value={String(pendingApps)} label="Pending Applications" delta="Needs review" deltaDir="down" />
+        <StatCard icon={<PartyPopper size={24} />} value={String(upcoming)} label="Upcoming Events" delta="↑ 2 vs last week" deltaDir="up" />
+        <StatCard icon={<FileText size={24} />} value={fmtINR(totalQuoteVal)} label="Active Quotation Value" delta="↑ 12.4%" deltaDir="up" />
+        <StatCard icon={<Users size={24} />} value={String(activeStaff)} label="Active Staff" delta="↑ 3 this month" deltaDir="up" />
+        <StatCard icon={<ClipboardList size={24} />} value={String(pendingApps)} label="Pending Applications" delta="Needs review" deltaDir="down" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 18 }}>
+      <div className="dashboard-grid-main">
         <div className="panel">
           <div className="panel-head">
             <h3>Upcoming Events</h3>
-            <a onClick={() => navigate('events')} style={{ fontSize: 12, fontWeight: 600, color: 'var(--gold)', cursor: 'pointer' }}>View all →</a>
+            <a onClick={() => navigate('events')} style={{ fontSize: 12, fontWeight: 600, color: 'var(--gold)', cursor: 'pointer' }}>View all <ArrowRight size={14} className="inline" /></a>
           </div>
           <div className="panel-body pad0">
-            <div className="table-wrap">
-              <table>
+            <div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
                 <thead><tr><th>Event</th><th>Tier</th><th>Date</th><th>Staff</th><th>Status</th></tr></thead>
                 <tbody>
                   {db.events.filter(e => e.status !== 'Completed').slice(0, 5).map(e => (
@@ -67,15 +67,15 @@ function AdminDashboard() {
         <div className="panel">
           <div className="panel-head"><h3>Quick Actions</h3></div>
           <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('applications')}>📋 Review {pendingApps} pending applications</button>
-            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('advances')}>💵 Approve staff advances</button>
-            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('checklists')}>✅ Track dispatch checklists</button>
-            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('whatsapp')}>💬 Send WhatsApp updates</button>
+            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('applications')}><ClipboardList size={16} className="inline mr-2" /> Review {pendingApps} pending applications</button>
+            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('advances')}><Banknote size={16} className="inline mr-2" /> Approve staff advances</button>
+            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('checklists')}><CheckCircle size={16} className="inline mr-2" /> Track dispatch checklists</button>
+            <button className="btn btn-outline" style={{ justifyContent: 'flex-start' }} onClick={() => navigate('whatsapp')}><MessageCircle size={16} className="inline mr-2" /> Send WhatsApp updates</button>
           </div>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginTop: 4 }}>
+      <div className="dashboard-grid-equal">
         <div className="panel">
           <div className="panel-head"><h3>Revenue This Month</h3></div>
           <div className="panel-body">
@@ -93,7 +93,7 @@ function AdminDashboard() {
         <div className="panel">
           <div className="panel-head">
             <h3>Top Performing Staff</h3>
-            <a onClick={() => navigate('performance')} style={{ fontSize: 12, fontWeight: 600, color: 'var(--gold)', cursor: 'pointer' }}>View all →</a>
+            <a onClick={() => navigate('performance')} style={{ fontSize: 12, fontWeight: 600, color: 'var(--gold)', cursor: 'pointer' }}>View all <ArrowRight size={14} className="inline" /></a>
           </div>
           <div className="panel-body" style={{ paddingTop: 6 }}>
             {[...db.staff].sort((a, b) => b.rating - a.rating).slice(0, 4).map(s => (
@@ -102,7 +102,7 @@ function AdminDashboard() {
                   <div className="avatar-sm" style={{ width: 26, height: 26, fontSize: 10 }}>{s.avatar}</div>
                   {s.name}
                 </div>
-                <div className="v rating-stars">★ {s.rating}</div>
+                <div className="v rating-stars"><Star size={14} className="inline" style={{ verticalAlign: 'text-bottom' }} /> {s.rating}</div>
               </div>
             ))}
           </div>
@@ -122,23 +122,23 @@ function StoreDashboard() {
     <>
       <div className="page-head">
         <div>
-          <h1>Good morning, Suresh 📦</h1>
+          <h1>Good morning, Suresh <Package size={24} className="inline ml-2" /></h1>
           <div className="page-desc">Kochi Main Godown — {todayStr()}</div>
         </div>
         <div className="head-actions">
-          <button className="btn btn-gold" onClick={() => navigate('checklists')}>✅ View Checklists</button>
+          <button className="btn btn-gold" onClick={() => navigate('checklists')}><CheckCircle size={16} className="inline mr-2" /> View Checklists</button>
         </div>
       </div>
       <div className="stat-grid">
-        <StatCard icon="📦" value={String(db.stock.length)} label="Stock Categories Tracked" />
-        <StatCard icon="⚠️" value={String(lowStock)} label="Low Stock Alerts" delta="Below 40% availability" deltaDir="down" />
-        <StatCard icon="✅" value={String(pendingChecklists)} label="Checklists Pending Dispatch" />
-        <StatCard icon="🚚" value={String(outTrips)} label="Vehicles Currently Out" />
+        <StatCard icon={<Package size={24} />} value={String(db.stock.length)} label="Stock Categories Tracked" />
+        <StatCard icon={<AlertTriangle size={24} />} value={String(lowStock)} label="Low Stock Alerts" delta="Below 40% availability" deltaDir="down" />
+        <StatCard icon={<CheckCircle size={24} />} value={String(pendingChecklists)} label="Checklists Pending Dispatch" />
+        <StatCard icon={<Truck size={24} />} value={String(outTrips)} label="Vehicles Currently Out" />
       </div>
       <div className="panel">
-        <div className="panel-head"><h3>Today's Dispatch Queue</h3><a onClick={() => navigate('checklists')} style={{ fontSize: 12, fontWeight: 600, color: 'var(--gold)', cursor: 'pointer' }}>View all →</a></div>
+        <div className="panel-head"><h3>Today's Dispatch Queue</h3><a onClick={() => navigate('checklists')} style={{ fontSize: 12, fontWeight: 600, color: 'var(--gold)', cursor: 'pointer' }}>View all <ArrowRight size={14} className="inline" /></a></div>
         <div className="panel-body pad0">
-          <div className="table-wrap"><table>
+          <div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
             <thead><tr><th>Checklist</th><th>Event</th><th>Tier</th><th>Status</th><th></th></tr></thead>
             <tbody>
               {db.checklists.map(c => (
@@ -157,7 +157,7 @@ function StoreDashboard() {
       <div className="panel">
         <div className="panel-head"><h3>Low Stock Alerts</h3></div>
         <div className="panel-body pad0">
-          <div className="table-wrap"><table>
+          <div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
             <thead><tr><th>Item</th><th>Available</th><th>Total</th><th>Status</th></tr></thead>
             <tbody>
               {db.stock.filter(s => (s.available / s.total) < 0.5).map(s => (
@@ -183,20 +183,20 @@ function SiteDashboard() {
     <>
       <div className="page-head">
         <div>
-          <h1>Hi Sreelakshmi 📍</h1>
+          <h1>Hi Sreelakshmi <MapPin size={24} className="inline ml-2" /></h1>
           <div className="page-desc">Your on-ground event operations — {todayStr()}</div>
         </div>
       </div>
       <div className="stat-grid">
-        <StatCard icon="🎉" value={String(myEvents.length)} label="Active Site Assignments" />
-        <StatCard icon="✅" value="2" label="Pending Stock Verifications" />
-        <StatCard icon="📍" value={String(db.siteShares.length)} label="Site Updates Shared" />
+        <StatCard icon={<PartyPopper size={24} />} value={String(myEvents.length)} label="Active Site Assignments" />
+        <StatCard icon={<CheckCircle size={24} />} value="2" label="Pending Stock Verifications" />
+        <StatCard icon={<MapPin size={24} />} value={String(db.siteShares.length)} label="Site Updates Shared" />
       </div>
       <div className="panel">
         <div className="panel-head"><h3>Current Site: Menon-Pillai Wedding</h3><span className="badge badge-warn">In Progress</span></div>
         <div className="panel-body">
-          <div className="checklist-item"><div className="check-circle checked">✓</div> Mandap setup verified — 24 Chiavari chair sets placed</div>
-          <div className="checklist-item"><div className="check-circle checked">✓</div> Dinnerware count confirmed against checklist CHK-701</div>
+          <div className="checklist-item"><div className="check-circle checked"><Check size={14} /></div> Mandap setup verified — 24 Chiavari chair sets placed</div>
+          <div className="checklist-item"><div className="check-circle checked"><Check size={14} /></div> Dinnerware count confirmed against checklist CHK-701</div>
           <div className="checklist-item"><div className="check-circle"></div> Floral centerpieces — 2 short, flagged to store manager</div>
           <div className="checklist-item"><div className="check-circle"></div> Final headcount confirmation with serving staff</div>
         </div>

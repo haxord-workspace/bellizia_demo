@@ -1,5 +1,6 @@
 import { useApp } from '../context/AppContext';
 import { TierBadge } from '../components/ui/Badge';
+import { ArrowRight, Award } from 'lucide-react';
 
 export function PromotionsPage() {
   const { db, setDB, confirmAction, toast } = useApp();
@@ -26,11 +27,11 @@ export function PromotionsPage() {
       </div>
       <div className="panel" style={{ padding: '20px 22px', marginBottom: 18 }}>
         <div className="section-title" style={{ marginBottom: 12 }}>Promotion Rules</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        <div className="dashboard-grid-equal">
           {db.promotionRules.map((r, i) => (
             <div key={i} style={{ border: '1px solid var(--line)', borderRadius: 10, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
               <TierBadge tier={r.from} />
-              <span style={{ color: 'var(--bronze)' }}>→</span>
+              <ArrowRight size={16} style={{ color: 'var(--bronze)' }} />
               <TierBadge tier={r.to} />
               <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
                 <div className="cell-strong">{r.threshold} events</div>
@@ -42,7 +43,7 @@ export function PromotionsPage() {
       </div>
       <div className="panel">
         <div className="panel-head"><h3>Eligible for Promotion ({eligible.length})</h3></div>
-        <div className="panel-body pad0"><div className="table-wrap"><table>
+        <div className="panel-body pad0"><div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
           <thead><tr><th>Staff</th><th>Current Tier</th><th>Events Completed</th><th>Next Tier</th><th></th></tr></thead>
           <tbody>
             {eligible.map(s => (
@@ -55,7 +56,7 @@ export function PromotionsPage() {
               </tr>
             ))}
             {eligible.length === 0 && (
-              <tr><td colSpan={5}><div className="empty-state"><div className="empty-icon">🏅</div><div className="empty-title">No one is eligible right now</div><div className="empty-desc">Staff become eligible automatically once they cross the event threshold for their current tier.</div></div></td></tr>
+              <tr><td colSpan={5}><div className="empty-state"><div className="empty-icon"><Award size={48} /></div><div className="empty-title">No one is eligible right now</div><div className="empty-desc">Staff become eligible automatically once they cross the event threshold for their current tier.</div></div></td></tr>
             )}
           </tbody>
         </table></div></div>

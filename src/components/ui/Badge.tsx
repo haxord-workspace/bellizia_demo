@@ -62,9 +62,11 @@ export function Avatar({ initials, size = 32 }: { initials: string; size?: numbe
   );
 }
 
+import type { ReactNode } from 'react';
+
 // ===== StatCard =====
 export function StatCard({ icon, value, label, delta, deltaDir }: {
-  icon: string; value: string; label: string; delta?: string; deltaDir?: 'up' | 'down';
+  icon: ReactNode; value: string; label: string; delta?: string; deltaDir?: 'up' | 'down';
 }) {
   return (
     <div className="stat-card">

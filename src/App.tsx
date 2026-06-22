@@ -3,6 +3,7 @@ import { Sidebar } from './components/layout/Sidebar';
 import { Topbar } from './components/layout/Topbar';
 import { Modal } from './components/ui/Modal';
 import { ToastContainer } from './components/ui/Toast';
+import { Construction } from 'lucide-react';
 
 // Pages
 import { DashboardPage } from './pages/DashboardPage';
@@ -18,6 +19,13 @@ import { PerformancePage } from './pages/PerformancePage';
 import { PayrollPage } from './pages/PayrollPage';
 import { AdvancesPage } from './pages/AdvancesPage';
 import { GodownsPage } from './pages/GodownsPage';
+import { StockPage } from './pages/StockPage';
+import { VehiclesPage } from './pages/VehiclesPage';
+import { VehicleTripsPage } from './pages/VehicleTripsPage';
+import { UsersPage } from './pages/UsersPage';
+import { SiteSharingPage } from './pages/SiteSharingPage';
+import { WhatsappPage } from './pages/WhatsappPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 function AppContent() {
   const { currentPage } = useApp();
@@ -37,10 +45,17 @@ function AppContent() {
       case 'payroll': return <PayrollPage />;
       case 'advances': return <AdvancesPage />;
       case 'godowns': return <GodownsPage />;
+      case 'stock': return <StockPage />;
+      case 'vehicles': return <VehiclesPage />;
+      case 'trips': return <VehicleTripsPage />;
+      case 'users': return <UsersPage />;
+      case 'sitesharing': return <SiteSharingPage />;
+      case 'whatsapp': return <WhatsappPage />;
+      case 'settings': return <SettingsPage />;
       default:
         return (
           <div className="empty-state">
-            <div className="empty-icon">🚧</div>
+            <div className="empty-icon"><Construction size={48} /></div>
             <div className="empty-title">Under Construction</div>
             <div className="empty-desc">This page is not fully converted to React yet.</div>
           </div>

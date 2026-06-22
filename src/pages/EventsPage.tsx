@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { TierBadge, StatusBadge } from '../components/ui/Badge';
 import { fmtDate, sumStaff, uid } from '../data/db';
 import type { ERPEvent, EventType, StaffTier } from '../data/types';
+import { Eye, Pencil, Trash2, Search, PartyPopper, X } from 'lucide-react';
 
 export function EventsPage() {
   const { db, setDB, openModal, closeModal, toast, confirmAction } = useApp();
@@ -31,7 +32,7 @@ export function EventsPage() {
       <div>
         <div className="modal-head">
           <div><h3>{e.name}</h3><div className="modal-sub">{e.id} · {e.venue}</div></div>
-          <button className="modal-close" onClick={closeModal}>✕</button>
+          <button className="modal-close" onClick={closeModal}><X size={16} /></button>
         </div>
         <div className="modal-body">
           <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
@@ -77,7 +78,7 @@ export function EventsPage() {
         </div>
       </div>
       <div className="toolbar">
-        <div className="search-box">🔍 <span>Search events…</span></div>
+        <div className="search-box"><Search size={16} /> <span>Search events…</span></div>
         {['all', 'Upcoming', 'In Progress', 'Completed'].map(f => (
           <div key={f} className={`filter-chip ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>
             {f === 'all' ? 'All' : f}
@@ -86,7 +87,7 @@ export function EventsPage() {
       </div>
       <div className="panel">
         <div className="panel-body pad0">
-          <div className="table-wrap"><table>
+          <div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
             <thead><tr><th>Event</th><th>Type</th><th>Tier</th><th>Date</th><th>Guests</th><th>Staff Status</th><th>Status</th><th></th></tr></thead>
             <tbody>
               {filtered.map(e => (
@@ -107,15 +108,15 @@ export function EventsPage() {
                   <td><StatusBadge status={e.status} /></td>
                   <td>
                     <div className="table-actions">
-                      <div className="row-action" title="View" onClick={() => viewEvent(e.id)}>👁</div>
-                      <div className="row-action" title="Edit" onClick={() => openEventForm(e.id)}>✎</div>
-                      <div className="row-action danger" title="Delete" onClick={() => deleteEvent(e.id)}>🗑</div>
+                      <div className="row-action" title="View" onClick={() => viewEvent(e.id)}><Eye size={16} /></div>
+                      <div className="row-action" title="Edit" onClick={() => openEventForm(e.id)}><Pencil size={16} /></div>
+                      <div className="row-action danger" title="Delete" onClick={() => deleteEvent(e.id)}><Trash2 size={16} /></div>
                     </div>
                   </td>
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={8}><div className="empty-state"><div className="empty-icon">🎉</div><div className="empty-title">No events found</div><div className="empty-desc">Try a different filter or create a new event.</div></div></td></tr>
+                <tr><td colSpan={8}><div className="empty-state"><div className="empty-icon"><PartyPopper size={48} /></div><div className="empty-title">No events found</div><div className="empty-desc">Try a different filter or create a new event.</div></div></td></tr>
               )}
             </tbody>
           </table></div>
@@ -151,7 +152,7 @@ function EventForm({ event: e, onClose, onSave }: {
     <>
       <div className="modal-head">
         <div><h3>{e ? 'Edit Event' : 'New Event'}</h3><div className="modal-sub">{e ? e.id : 'Define event details and staff requirements'}</div></div>
-        <button className="modal-close" onClick={onClose}>✕</button>
+        <button className="modal-close" onClick={onClose}><X size={16} /></button>
       </div>
       <div className="modal-body">
         <div className="field"><label>Event Name</label><input value={name} onChange={ev => setName(ev.target.value)} placeholder="e.g. Nair Family Wedding" /></div>

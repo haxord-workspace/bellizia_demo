@@ -1,6 +1,7 @@
 import { useApp } from '../context/AppContext';
 import { TierBadge, ChecklistStatusBadge } from '../components/ui/Badge';
 import { uid, defaultItemsForTier } from '../data/db';
+import { X, Check, Truck } from 'lucide-react';
 
 export function ChecklistsPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();
@@ -32,7 +33,7 @@ export function ChecklistsPage() {
 
     openModal(
       <div>
-        <div className="modal-head"><div><h3>Assign Truck</h3><div className="modal-sub">{c.eventName}</div></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>Assign Truck</h3><div className="modal-sub">{c.eventName}</div></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Select Vehicle</label>
             <select onChange={e => { selectedVid = e.target.value; }}>
@@ -69,7 +70,7 @@ export function ChecklistsPage() {
     let selectedQid = approvedQuotes[0].id;
     openModal(
       <div>
-        <div className="modal-head"><div><h3>New Checklist</h3></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>New Checklist</h3></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Quotation</label>
             <select onChange={e => { selectedQid = e.target.value; }}>
@@ -137,7 +138,7 @@ export function ChecklistsPage() {
               <div className="panel-body">
                 {c.items.map((it, idx) => (
                   <div key={idx} className="checklist-item">
-                    <div className={`check-circle ${it.sent >= it.qty ? 'checked' : ''}`}>{it.sent >= it.qty ? '✓' : ''}</div>
+                    <div className={`check-circle ${it.sent >= it.qty ? 'checked' : ''}`}>{it.sent >= it.qty ? <Check size={14} /> : ''}</div>
                     <div style={{ flex: 1 }}>{it.name}</div>
                     <span className="qty-pill">{it.sent} / {it.qty}</span>
                     {c.status !== 'Dispatched' && <button className="btn btn-sm btn-outline" onClick={() => markItemPacked(c.id, idx)}>Mark Packed</button>}
@@ -146,7 +147,7 @@ export function ChecklistsPage() {
                 <div className="divider" />
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 9 }}>
                   {c.status === 'Pending' && <button className="btn btn-sm btn-outline" onClick={() => updateStatus(c.id, 'Packing')}>Start Packing</button>}
-                  {c.status === 'Packing' && <button className="btn btn-sm btn-gold" onClick={() => dispatchChecklist(c.id)}>🚚 Assign Truck & Dispatch</button>}
+                  {c.status === 'Packing' && <button className="btn btn-sm btn-gold" onClick={() => dispatchChecklist(c.id)}><Truck size={16} className="inline mr-2" /> Assign Truck & Dispatch</button>}
                   {c.status === 'Dispatched' && <span className="badge badge-ok">Dispatched — awaiting return</span>}
                 </div>
               </div>

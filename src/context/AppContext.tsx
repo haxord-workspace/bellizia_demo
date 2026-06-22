@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useCallback, useRef, useState } from 'react';
 import type { DB, AppRole, PageId } from '../data/types';
 import { createInitialDB } from '../data/db';
+import {
+  Crown, Package, MapPin, BarChart, PartyPopper, FileText, Receipt, CheckCircle,
+  Users, ClipboardList, Ban, Award, Star, IndianRupee, Banknote, Store, Truck, Route,
+  UserCog, MessageCircle, Settings, RefreshCw, X
+} from 'lucide-react';
 
 // ============================================================
 // TOAST
@@ -40,6 +45,8 @@ interface AppContextValue {
     confirmLabel?: string,
     danger?: boolean
   ) => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -49,6 +56,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [currentPage, setCurrentPage] = useState<PageId>('dashboard');
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const [modal, setModal] = useState<ModalState>({ open: false, content: null, wide: false });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const toastCounter = useRef(0);
 
   const navigate = useCallback((page: PageId) => {
@@ -94,7 +102,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <AppContext.Provider value={{ db, setDB, currentPage, navigate, toast, toasts, modal, openModal, closeModal, confirmAction }}>
+    <AppContext.Provider value={{ db, setDB, currentPage, navigate, toast, toasts, modal, openModal, closeModal, confirmAction, sidebarOpen, setSidebarOpen }}>
       {children}
     </AppContext.Provider>
   );
@@ -114,7 +122,7 @@ function ConfirmDialogContent({
     <>
       <div className="modal-head">
         <div><h3>{title}</h3></div>
-        <button className="modal-close" onClick={onCancel}>✕</button>
+        <button className="modal-close" onClick={onCancel}><X size={16} /></button>
       </div>
       <div className="modal-body">
         <p style={{ fontSize: '13.5px', color: 'var(--bronze)', lineHeight: 1.6 }}
@@ -140,72 +148,72 @@ export function useApp(): AppContextValue {
 }
 
 // Nav config
-export const ROLES: Record<AppRole, { name: string; title: string; initials: string; icon: string; desc: string }> = {
-  admin: { name: 'Priya Varma', title: 'Admin / Owner', initials: 'PV', icon: '👑', desc: 'Full system access' },
-  store: { name: 'Suresh Kumar', title: 'Store Manager', initials: 'SK', icon: '📦', desc: 'Kochi Main Godown' },
-  site: { name: 'Sreelakshmi R', title: 'Site Manager', initials: 'SR', icon: '📍', desc: 'On-ground event ops' },
+export const ROLES: Record<AppRole, { name: string; title: string; initials: string; icon: React.ReactNode; desc: string }> = {
+  admin: { name: 'Priya Varma', title: 'Admin / Owner', initials: 'PV', icon: <Crown size={16} />, desc: 'Full system access' },
+  store: { name: 'Suresh Kumar', title: 'Store Manager', initials: 'SK', icon: <Package size={16} />, desc: 'Kochi Main Godown' },
+  site: { name: 'Sreelakshmi R', title: 'Site Manager', initials: 'SR', icon: <MapPin size={16} />, desc: 'On-ground event ops' },
 };
 
-export interface NavItem { id: PageId; label: string; icon: string; badge?: number; }
+export interface NavItem { id: PageId; label: string; icon: React.ReactNode; badge?: number; }
 export interface NavGroup { group: string; items: NavItem[]; }
 
 export const NAV: Record<AppRole, NavGroup[]> = {
   admin: [
-    { group: 'Overview', items: [{ id: 'dashboard', label: 'Dashboard', icon: '📊' }] },
+    { group: 'Overview', items: [{ id: 'dashboard', label: 'Dashboard', icon: <BarChart size={16} /> }] },
     { group: 'Events', items: [
-      { id: 'events', label: 'Events', icon: '🎉', badge: 7 },
-      { id: 'quotations', label: 'Quotations', icon: '📝', badge: 7 },
-      { id: 'invoices', label: 'Invoices', icon: '🧾' },
-      { id: 'checklists', label: 'Checklists', icon: '✅' },
+      { id: 'events', label: 'Events', icon: <PartyPopper size={16} />, badge: 7 },
+      { id: 'quotations', label: 'Quotations', icon: <FileText size={16} />, badge: 7 },
+      { id: 'invoices', label: 'Invoices', icon: <Receipt size={16} /> },
+      { id: 'checklists', label: 'Checklists', icon: <CheckCircle size={16} /> },
     ]},
     { group: 'Workforce', items: [
-      { id: 'staff', label: 'Staff Directory', icon: '👥', badge: 8 },
-      { id: 'applications', label: 'Shift Applications', icon: '📋', badge: 2 },
-      { id: 'cancellations', label: 'Cancellations', icon: '🚫' },
-      { id: 'promotions', label: 'Tier & Promotions', icon: '🏅' },
-      { id: 'performance', label: 'Performance', icon: '⭐' },
+      { id: 'staff', label: 'Staff Directory', icon: <Users size={16} />, badge: 8 },
+      { id: 'applications', label: 'Shift Applications', icon: <ClipboardList size={16} />, badge: 2 },
+      { id: 'cancellations', label: 'Cancellations', icon: <Ban size={16} /> },
+      { id: 'promotions', label: 'Tier & Promotions', icon: <Award size={16} /> },
+      { id: 'performance', label: 'Performance', icon: <Star size={16} /> },
     ]},
     { group: 'Finance', items: [
-      { id: 'payroll', label: 'Payroll & Earnings', icon: '💰' },
-      { id: 'advances', label: 'Advances', icon: '💵', badge: 1 },
+      { id: 'payroll', label: 'Payroll & Earnings', icon: <IndianRupee size={16} /> },
+      { id: 'advances', label: 'Advances', icon: <Banknote size={16} />, badge: 1 },
     ]},
     { group: 'Inventory & Logistics', items: [
-      { id: 'godowns', label: 'Godowns', icon: '🏬' },
-      { id: 'stock', label: 'Stock & Inventory', icon: '📦' },
-      { id: 'vehicles', label: 'Vehicles', icon: '🚚' },
-      { id: 'trips', label: 'Vehicle Trips', icon: '🛣️' },
+      { id: 'godowns', label: 'Godowns', icon: <Store size={16} /> },
+      { id: 'stock', label: 'Stock & Inventory', icon: <Package size={16} /> },
+      { id: 'vehicles', label: 'Vehicles', icon: <Truck size={16} /> },
+      { id: 'trips', label: 'Vehicle Trips', icon: <Route size={16} /> },
     ]},
     { group: 'Admin', items: [
-      { id: 'users', label: 'Team & Roles', icon: '🧑‍💼' },
-      { id: 'sitesharing', label: 'Site Sharing', icon: '📍' },
-      { id: 'whatsapp', label: 'WhatsApp Messaging', icon: '💬' },
-      { id: 'settings', label: 'Settings', icon: '⚙️' },
+      { id: 'users', label: 'Team & Roles', icon: <UserCog size={16} /> },
+      { id: 'sitesharing', label: 'Site Sharing', icon: <MapPin size={16} /> },
+      { id: 'whatsapp', label: 'WhatsApp Messaging', icon: <MessageCircle size={16} /> },
+      { id: 'settings', label: 'Settings', icon: <Settings size={16} /> },
     ]},
   ],
   store: [
-    { group: 'Overview', items: [{ id: 'dashboard', label: 'Dashboard', icon: '📊' }] },
+    { group: 'Overview', items: [{ id: 'dashboard', label: 'Dashboard', icon: <BarChart size={16} /> }] },
     { group: 'Inventory', items: [
-      { id: 'stock', label: 'Stock & Inventory', icon: '📦' },
-      { id: 'godowns', label: 'Godowns', icon: '🏬' },
+      { id: 'stock', label: 'Stock & Inventory', icon: <Package size={16} /> },
+      { id: 'godowns', label: 'Godowns', icon: <Store size={16} /> },
     ]},
     { group: 'Dispatch', items: [
-      { id: 'checklists', label: 'Checklists', icon: '✅', badge: 3 },
-      { id: 'trips', label: 'Vehicle Trips', icon: '🛣️' },
-      { id: 'returns', label: 'Returns & Damage', icon: '🔄' },
+      { id: 'checklists', label: 'Checklists', icon: <CheckCircle size={16} />, badge: 3 },
+      { id: 'trips', label: 'Vehicle Trips', icon: <Route size={16} /> },
+      { id: 'returns', label: 'Returns & Damage', icon: <RefreshCw size={16} /> },
     ]},
     { group: 'Logistics', items: [
-      { id: 'vehicles', label: 'Vehicles', icon: '🚚' },
+      { id: 'vehicles', label: 'Vehicles', icon: <Truck size={16} /> },
     ]},
   ],
   site: [
-    { group: 'Overview', items: [{ id: 'dashboard', label: 'Dashboard', icon: '📊' }] },
+    { group: 'Overview', items: [{ id: 'dashboard', label: 'Dashboard', icon: <BarChart size={16} /> }] },
     { group: 'On Ground', items: [
-      { id: 'myevents', label: 'My Events', icon: '🎉' },
-      { id: 'verification', label: 'Stock Verification', icon: '✅' },
-      { id: 'sitesharing', label: 'Site Sharing', icon: '📍', badge: 2 },
+      { id: 'myevents', label: 'My Events', icon: <PartyPopper size={16} /> },
+      { id: 'verification', label: 'Stock Verification', icon: <CheckCircle size={16} /> },
+      { id: 'sitesharing', label: 'Site Sharing', icon: <MapPin size={16} />, badge: 2 },
     ]},
     { group: 'Team', items: [
-      { id: 'staff', label: 'Staff On Site', icon: '👥' },
+      { id: 'staff', label: 'Staff On Site', icon: <Users size={16} /> },
     ]},
   ],
 };

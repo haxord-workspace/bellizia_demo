@@ -8,7 +8,7 @@ export function CancellationsPage() {
       <div className="page-head">
         <div><h1>Cancellations</h1><div className="page-desc">Staff cancellation requests. A mandatory reason and a 3-day lock-out before the event are enforced.</div></div>
       </div>
-      <div className="panel"><div className="panel-body pad0"><div className="table-wrap"><table>
+      <div className="panel"><div className="panel-body pad0"><div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
         <thead><tr><th>Staff</th><th>Event</th><th>Reason</th><th>Requested</th><th>Event Date</th><th>3-Day Lock</th><th>Status</th></tr></thead>
         <tbody>
           {db.cancellations.map(c => (

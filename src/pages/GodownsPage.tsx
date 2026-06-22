@@ -1,5 +1,6 @@
 import { useApp } from '../context/AppContext';
 import { uid } from '../data/db';
+import { X, Pencil } from 'lucide-react';
 
 export function GodownsPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();
@@ -12,7 +13,7 @@ export function GodownsPage() {
 
     openModal(
       <div>
-        <div className="modal-head"><div><h3>{g ? 'Edit Godown' : 'Add Godown'}</h3></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>{g ? 'Edit Godown' : 'Add Godown'}</h3></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Godown Name</label><input defaultValue={name} onChange={e => { name = e.target.value; }} placeholder="e.g. Kozhikode Storage Unit" /></div>
           <div className="field"><label>Location</label><input defaultValue={location} onChange={e => { location = e.target.value; }} placeholder="Area, City" /></div>
@@ -48,7 +49,7 @@ export function GodownsPage() {
       <div className="stat-grid">
         {db.godowns.map(g => (
           <div key={g.id} className="panel" style={{ gridColumn: 'span 1' }}>
-            <div className="panel-head"><h3>{g.name}</h3><div className="row-action" onClick={() => openGodownForm(g.id)}>✎</div></div>
+            <div className="panel-head"><h3>{g.name}</h3><div className="row-action" onClick={() => openGodownForm(g.id)}><Pencil size={16} /></div></div>
             <div className="panel-body">
               <div className="kv"><div className="k">Location</div><div className="v">{g.location}</div></div>
               <div className="kv"><div className="k">Manager</div><div className="v">{g.manager}</div></div>

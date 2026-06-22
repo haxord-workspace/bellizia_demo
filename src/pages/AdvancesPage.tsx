@@ -1,6 +1,7 @@
 import { useApp } from '../context/AppContext';
 import { StatusBadge } from '../components/ui/Badge';
 import { fmtDate, fmtINR, uid } from '../data/db';
+import { X, Check } from 'lucide-react';
 
 export function AdvancesPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();
@@ -21,7 +22,7 @@ export function AdvancesPage() {
     let reason = '';
     openModal(
       <div>
-        <div className="modal-head"><div><h3>Log Advance Payment</h3></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>Log Advance Payment</h3></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Staff</label>
             <select onChange={e => { staffId = e.target.value; }}>
@@ -50,7 +51,7 @@ export function AdvancesPage() {
         <div><h1>Staff Advances</h1><div className="page-desc">Advance payment requests against future earnings.</div></div>
         <div className="head-actions"><button className="btn btn-gold" onClick={openAdvanceForm}>+ Log Advance</button></div>
       </div>
-      <div className="panel"><div className="panel-body pad0"><div className="table-wrap"><table>
+      <div className="panel"><div className="panel-body pad0"><div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
         <thead><tr><th>Staff</th><th>Amount</th><th>Reason</th><th>Date</th><th>Status</th><th></th></tr></thead>
         <tbody>
           {db.advances.map(a => (
@@ -62,8 +63,8 @@ export function AdvancesPage() {
               <td><StatusBadge status={a.status} /></td>
               <td>{a.status === 'Pending'
                 ? <div className="table-actions">
-                    <div className="row-action" onClick={() => approve(a.id)}>✓</div>
-                    <div className="row-action danger" onClick={() => reject(a.id)}>✕</div>
+                    <div className="row-action" onClick={() => approve(a.id)}><Check size={16} /></div>
+                    <div className="row-action danger" onClick={() => reject(a.id)}><X size={16} /></div>
                   </div>
                 : '—'}</td>
             </tr>

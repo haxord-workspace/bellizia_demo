@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { TierBadge, StatusBadge, Avatar } from '../components/ui/Badge';
 import { fmtDate, fmtINR, uid } from '../data/db';
 import type { Staff, StaffRole, StaffTier } from '../data/types';
+import { Eye, Pencil, Ban, Check, Search, X, Star } from 'lucide-react';
 
 export function StaffPage() {
   const { db, setDB, openModal, closeModal, toast, confirmAction } = useApp();
@@ -35,7 +36,7 @@ export function StaffPage() {
             <Avatar initials={s.avatar} size={42} />
             <div><h3>{s.name}</h3><div className="modal-sub">{s.id} · {s.role}</div></div>
           </div>
-          <button className="modal-close" onClick={closeModal}>✕</button>
+          <button className="modal-close" onClick={closeModal}><X size={16} /></button>
         </div>
         <div className="modal-body">
           <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}><TierBadge tier={s.tier} /><StatusBadge status={s.status} /></div>
@@ -43,7 +44,7 @@ export function StaffPage() {
           <div className="kv"><div className="k">Location</div><div className="v">{s.location}</div></div>
           <div className="kv"><div className="k">Joined</div><div className="v">{fmtDate(s.joined)}</div></div>
           <div className="kv"><div className="k">Events Completed</div><div className="v">{s.events}</div></div>
-          <div className="kv"><div className="k">Average Rating</div><div className="v rating-stars">★ {s.rating}</div></div>
+          <div className="kv"><div className="k">Average Rating</div><div className="v rating-stars"><Star size={14} className="inline" style={{ verticalAlign: 'text-bottom' }} /> {s.rating}</div></div>
           <div className="kv"><div className="k">Per-Event Wage</div><div className="v">{fmtINR(s.wage)}</div></div>
           {earning && <>
             <div className="divider" />
@@ -80,14 +81,14 @@ export function StaffPage() {
         <div className="head-actions"><button className="btn btn-gold" onClick={() => openStaffForm()}>+ Add Staff</button></div>
       </div>
       <div className="toolbar">
-        <div className="search-box">🔍 <span>Search staff…</span></div>
+        <div className="search-box"><Search size={16} /> <span>Search staff…</span></div>
         {['all', 'Active', 'Deactivated'].map(f => (
           <div key={f} className={`filter-chip ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>
             {f === 'all' ? 'All' : f}
           </div>
         ))}
       </div>
-      <div className="panel"><div className="panel-body pad0"><div className="table-wrap"><table>
+      <div className="panel"><div className="panel-body pad0"><div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
         <thead><tr><th>Staff</th><th>Role</th><th>Tier</th><th>Events</th><th>Rating</th><th>Location</th><th>Status</th><th></th></tr></thead>
         <tbody>
           {filtered.map(s => (
@@ -96,15 +97,15 @@ export function StaffPage() {
               <td>{s.role}</td>
               <td><TierBadge tier={s.tier} /></td>
               <td>{s.events}</td>
-              <td className="rating-stars">★ {s.rating}</td>
+              <td className="rating-stars"><Star size={14} className="inline" style={{ verticalAlign: 'text-bottom' }} /> {s.rating}</td>
               <td>{s.location}</td>
               <td><StatusBadge status={s.status} /></td>
               <td><div className="table-actions">
-                <div className="row-action" onClick={() => viewStaff(s.id)}>👁</div>
-                <div className="row-action" onClick={() => openStaffForm(s.id)}>✎</div>
+                <div className="row-action" onClick={() => viewStaff(s.id)}><Eye size={16} /></div>
+                <div className="row-action" onClick={() => openStaffForm(s.id)}><Pencil size={16} /></div>
                 {s.status === 'Active'
-                  ? <div className="row-action danger" onClick={() => deactivate(s.id)}>🚫</div>
-                  : <div className="row-action" onClick={() => reactivate(s.id)}>✓</div>}
+                  ? <div className="row-action danger" onClick={() => deactivate(s.id)}><Ban size={16} /></div>
+                  : <div className="row-action" onClick={() => reactivate(s.id)}><Check size={16} /></div>}
               </div></td>
             </tr>
           ))}
@@ -132,7 +133,7 @@ function StaffForm({ s, onClose, onSave }: {
   }
   return (
     <>
-      <div className="modal-head"><div><h3>{s ? 'Edit Staff' : 'Add Staff'}</h3></div><button className="modal-close" onClick={onClose}>✕</button></div>
+      <div className="modal-head"><div><h3>{s ? 'Edit Staff' : 'Add Staff'}</h3></div><button className="modal-close" onClick={onClose}><X size={16} /></button></div>
       <div className="modal-body">
         <div className="field-row">
           <div className="field"><label>Full Name</label><input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Karthik S" /></div>

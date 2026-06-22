@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { TierBadge, StatusBadge, StatCard } from '../components/ui/Badge';
 import { fmtINR, fmtDate, uid, defaultItemsForTier } from '../data/db';
 import type { Quotation, StaffTier, QuotationStatus } from '../data/types';
+import { X, FileText, CheckCircle, IndianRupee, Eye, Pencil, Check, Package, Trash2, ArrowRight } from 'lucide-react';
 
 export function QuotationsPage() {
   const { db, setDB, openModal, closeModal, toast, confirmAction } = useApp();
@@ -28,7 +29,7 @@ export function QuotationsPage() {
       <div>
         <div className="modal-head">
           <div><h3>{q.id}</h3><div className="modal-sub">{q.eventName}</div></div>
-          <button className="modal-close" onClick={closeModal}>✕</button>
+          <button className="modal-close" onClick={closeModal}><X size={16} /></button>
         </div>
         <div className="modal-body">
           <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}><TierBadge tier={q.tier} /><StatusBadge status={q.status} /></div>
@@ -80,13 +81,13 @@ export function QuotationsPage() {
         </div>
       </div>
       <div className="stat-grid">
-        <StatCard icon="📝" value={String(db.quotations.length)} label="Total Quotations" />
-        <StatCard icon="✅" value={String(db.quotations.filter(q => q.status === 'Approved').length)} label="Approved — Ready for Checklist" />
-        <StatCard icon="💰" value={fmtINR(total)} label="Total Pipeline Value" />
+        <StatCard icon={<FileText size={24} />} value={String(db.quotations.length)} label="Total Quotations" />
+        <StatCard icon={<CheckCircle size={24} />} value={String(db.quotations.filter(q => q.status === 'Approved').length)} label="Approved — Ready for Checklist" />
+        <StatCard icon={<IndianRupee size={24} />} value={fmtINR(total)} label="Total Pipeline Value" />
       </div>
       <div className="panel">
         <div className="panel-body pad0">
-          <div className="table-wrap"><table>
+          <div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
             <thead><tr><th>Quotation</th><th>Client</th><th>Tier</th><th>Amount</th><th>Date</th><th>Status</th><th></th></tr></thead>
             <tbody>
               {db.quotations.map(q => (
@@ -99,11 +100,11 @@ export function QuotationsPage() {
                   <td><StatusBadge status={q.status} /></td>
                   <td>
                     <div className="table-actions">
-                      <div className="row-action" title="View" onClick={() => viewQuotation(q.id)}>👁</div>
-                      <div className="row-action" title="Edit" onClick={() => openQuotationForm(q.id)}>✎</div>
-                      {q.status === 'Sent' && <div className="row-action" title="Approve" onClick={() => approveQuotation(q.id)}>✓</div>}
-                      {q.status === 'Approved' && <div className="row-action" title="Send to Store" onClick={() => sendToStore(q.id)}>📦</div>}
-                      <div className="row-action danger" title="Delete" onClick={() => deleteQuotation(q.id)}>🗑</div>
+                      <div className="row-action" title="View" onClick={() => viewQuotation(q.id)}><Eye size={16} /></div>
+                      <div className="row-action" title="Edit" onClick={() => openQuotationForm(q.id)}><Pencil size={16} /></div>
+                      {q.status === 'Sent' && <div className="row-action" title="Approve" onClick={() => approveQuotation(q.id)}><Check size={16} /></div>}
+                      {q.status === 'Approved' && <div className="row-action" title="Send to Store" onClick={() => sendToStore(q.id)}><Package size={16} /></div>}
+                      <div className="row-action danger" title="Delete" onClick={() => deleteQuotation(q.id)}><Trash2 size={16} /></div>
                     </div>
                   </td>
                 </tr>
@@ -140,7 +141,7 @@ function QuotationForm({ q, onClose, onSave }: {
     <>
       <div className="modal-head">
         <div><h3>{q ? 'Edit Quotation' : 'New Quotation'}</h3><div className="modal-sub">{q ? q.id : 'Draft a quotation for the client'}</div></div>
-        <button className="modal-close" onClick={onClose}>✕</button>
+        <button className="modal-close" onClick={onClose}><X size={16} /></button>
       </div>
       <div className="modal-body">
         <div className="field-row">
@@ -164,7 +165,7 @@ function QuotationForm({ q, onClose, onSave }: {
           <select value={status} onChange={e => setStatus(e.target.value as QuotationStatus)}>
             {['Draft','Sent','Approved','Invoiced'].map(s => <option key={s}>{s}</option>)}
           </select>
-          <div className="hint">Draft → Sent to client → Approved → Sent to Store → Invoiced</div>
+          <div className="hint">Draft <ArrowRight size={12} className="inline mx-1" /> Sent to client <ArrowRight size={12} className="inline mx-1" /> Approved <ArrowRight size={12} className="inline mx-1" /> Sent to Store <ArrowRight size={12} className="inline mx-1" /> Invoiced</div>
         </div>
       </div>
       <div className="modal-foot">

@@ -1,6 +1,7 @@
 import { useApp } from '../context/AppContext';
 import { StatCard } from '../components/ui/Badge';
 import { fmtINR } from '../data/db';
+import { X, IndianRupee, Banknote, Car, Receipt, Check } from 'lucide-react';
 
 export function PayrollPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();
@@ -12,7 +13,7 @@ export function PayrollPage() {
     const e = db.earnings.find(x => x.staffId === staffId)!;
     openModal(
       <div>
-        <div className="modal-head"><div><h3>Payslip — {e.name}</h3><div className="modal-sub">{e.month}</div></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>Payslip — {e.name}</h3><div className="modal-sub">{e.month}</div></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="kv"><div className="k">Events Worked</div><div className="v">{e.eventsWorked}</div></div>
           <div className="kv"><div className="k">Base Wage</div><div className="v">{fmtINR(e.baseWage)}</div></div>
@@ -37,7 +38,7 @@ export function PayrollPage() {
     let base = 0; let ta = 0; let adv = 0; let events = 1;
     openModal(
       <div>
-        <div className="modal-head"><div><h3>Add Earning Record</h3></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>Add Earning Record</h3></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Staff</label>
             <select onChange={e => { staffId = e.target.value; }}>
@@ -71,11 +72,11 @@ export function PayrollPage() {
         <div className="head-actions"><button className="btn btn-gold" onClick={openPayrollForm}>+ Add Earning Record</button></div>
       </div>
       <div className="stat-grid">
-        <StatCard icon="💰" value={fmtINR(totalPayable)} label="Net Payable — June 2026" />
-        <StatCard icon="💵" value={fmtINR(totalAdvance)} label="Advances Deducted" />
-        <StatCard icon="🚗" value={fmtINR(totalTA)} label="Travel Allowance Paid" />
+        <StatCard icon={<IndianRupee size={24} />} value={fmtINR(totalPayable)} label="Net Payable — June 2026" />
+        <StatCard icon={<Banknote size={24} />} value={fmtINR(totalAdvance)} label="Advances Deducted" />
+        <StatCard icon={<Car size={24} />} value={fmtINR(totalTA)} label="Travel Allowance Paid" />
       </div>
-      <div className="panel"><div className="panel-body pad0"><div className="table-wrap"><table>
+      <div className="panel"><div className="panel-body pad0"><div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
         <thead><tr><th>Staff</th><th>Events Worked</th><th>Base Wage</th><th>Travel Allowance</th><th>Advance</th><th>Net Payable</th><th></th></tr></thead>
         <tbody>
           {db.earnings.map(e => (
@@ -87,8 +88,8 @@ export function PayrollPage() {
               <td style={{ color: 'var(--danger)' }}>-{fmtINR(e.advance)}</td>
               <td className="cell-strong">{fmtINR(e.netPayable)}</td>
               <td><div className="table-actions">
-                <div className="row-action" onClick={() => viewPayslip(e.staffId)}>🧾</div>
-                <div className="row-action" onClick={() => toast('Marked as paid. Payment record archived.')}>✓</div>
+                <div className="row-action" onClick={() => viewPayslip(e.staffId)}><Receipt size={16} /></div>
+                <div className="row-action" onClick={() => toast('Marked as paid. Payment record archived.')}><Check size={16} /></div>
               </div></td>
             </tr>
           ))}

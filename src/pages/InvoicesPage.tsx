@@ -2,6 +2,7 @@
 import { useApp } from '../context/AppContext';
 import { StatusBadge, StatCard } from '../components/ui/Badge';
 import { fmtINR, uid } from '../data/db';
+import { X, Receipt, CheckCircle, Hourglass, Eye, Banknote } from 'lucide-react';
 
 export function InvoicesPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();
@@ -12,7 +13,7 @@ export function InvoicesPage() {
     const inv = db.invoices.find(x => x.id === id)!;
     openModal(
       <div>
-        <div className="modal-head"><div><h3>{inv.id}</h3><div className="modal-sub">{inv.client}</div></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>{inv.id}</h3><div className="modal-sub">{inv.client}</div></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="kv"><div className="k">Linked Quotation</div><div className="v">{inv.quotationId}</div></div>
           <div className="kv"><div className="k">Total Amount</div><div className="v">{fmtINR(inv.amount)}</div></div>
@@ -30,7 +31,7 @@ export function InvoicesPage() {
     let amt = 0;
     openModal(
       <div>
-        <div className="modal-head"><div><h3>Record Payment</h3><div className="modal-sub">{inv.id} — Balance: {fmtINR(inv.balance)}</div></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>Record Payment</h3><div className="modal-sub">{inv.id} — Balance: {fmtINR(inv.balance)}</div></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Payment Amount (₹)</label><input type="number" placeholder="Amount received" onChange={e => { amt = Number(e.target.value); }} /></div>
         </div>
@@ -58,7 +59,7 @@ export function InvoicesPage() {
     let paid = 0;
     openModal(
       <div>
-        <div className="modal-head"><div><h3>New Invoice</h3></div><button className="modal-close" onClick={closeModal}>✕</button></div>
+        <div className="modal-head"><div><h3>New Invoice</h3></div><button className="modal-close" onClick={closeModal}><X size={16} /></button></div>
         <div className="modal-body">
           <div className="field"><label>Quotation</label>
             <select onChange={e => { selectedQid = e.target.value; }}>
@@ -93,11 +94,11 @@ export function InvoicesPage() {
         <div className="head-actions"><button className="btn btn-gold" onClick={openInvoiceForm}>+ New Invoice</button></div>
       </div>
       <div className="stat-grid">
-        <StatCard icon="🧾" value={String(db.invoices.length)} label="Total Invoices" />
-        <StatCard icon="✅" value={fmtINR(totalCollected)} label="Total Collected" />
-        <StatCard icon="⏳" value={fmtINR(totalBalance)} label="Outstanding Balance" />
+        <StatCard icon={<Receipt size={24} />} value={String(db.invoices.length)} label="Total Invoices" />
+        <StatCard icon={<CheckCircle size={24} />} value={fmtINR(totalCollected)} label="Total Collected" />
+        <StatCard icon={<Hourglass size={24} />} value={fmtINR(totalBalance)} label="Outstanding Balance" />
       </div>
-      <div className="panel"><div className="panel-body pad0"><div className="table-wrap"><table>
+      <div className="panel"><div className="panel-body pad0"><div className="w-full overflow-x-auto"><table className="w-full text-left whitespace-nowrap">
         <thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Paid</th><th>Balance</th><th>Status</th><th></th></tr></thead>
         <tbody>
           {db.invoices.map(i => (
@@ -109,8 +110,8 @@ export function InvoicesPage() {
               <td className="cell-strong" style={{ color: i.balance > 0 ? 'var(--danger)' : 'var(--ok)' }}>{fmtINR(i.balance)}</td>
               <td><StatusBadge status={i.status} /></td>
               <td><div className="table-actions">
-                <div className="row-action" title="View" onClick={() => viewInvoice(i.id)}>👁</div>
-                <div className="row-action" title="Record Payment" onClick={() => recordPayment(i.id)}>💵</div>
+                <div className="row-action" title="View" onClick={() => viewInvoice(i.id)}><Eye size={16} /></div>
+                <div className="row-action" title="Record Payment" onClick={() => recordPayment(i.id)}><Banknote size={16} /></div>
               </div></td>
             </tr>
           ))}
