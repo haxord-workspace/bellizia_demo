@@ -1,5 +1,5 @@
 import { useApp } from '../context/AppContext';
-import { TierBadge, StockBar } from '../components/ui/Badge';
+import { TierBadge } from '../components/ui/Badge';
 
 export function PromotionsPage() {
   const { db, setDB, confirmAction, toast } = useApp();

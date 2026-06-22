@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { TierBadge, StatusBadge, StatCard } from '../components/ui/Badge';
-import { fmtDate, fmtINR, sumStaff, uid, defaultItemsForTier } from '../data/db';
+import { TierBadge, StatusBadge } from '../components/ui/Badge';
+import { fmtDate, sumStaff, uid } from '../data/db';
 import type { ERPEvent, EventType, StaffTier } from '../data/types';
 
 export function EventsPage() {

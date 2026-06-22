@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { TierBadge, StatusBadge, StatCard, Avatar } from '../components/ui/Badge';
+import { TierBadge, StatusBadge, Avatar } from '../components/ui/Badge';
 import { fmtDate, fmtINR, uid } from '../data/db';
 import type { Staff, StaffRole, StaffTier } from '../data/types';
 

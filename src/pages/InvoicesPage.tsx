@@ -1,7 +1,7 @@
-import { useState } from 'react';
+// removed useState
 import { useApp } from '../context/AppContext';
 import { StatusBadge, StatCard } from '../components/ui/Badge';
-import { fmtINR, fmtDate, uid } from '../data/db';
+import { fmtINR, uid } from '../data/db';
 
 export function InvoicesPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();

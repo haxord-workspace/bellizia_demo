@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useApp, ROLES, NAV, PAGE_TITLES } from '../../context/AppContext';
+import { useApp, ROLES, NAV } from '../../context/AppContext';
 import type { AppRole, PageId } from '../../data/types';
 
 export function Sidebar() {

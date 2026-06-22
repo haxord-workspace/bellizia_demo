@@ -1,6 +1,6 @@
 import { useApp } from '../context/AppContext';
 import { StatCard } from '../components/ui/Badge';
-import { fmtINR, uid } from '../data/db';
+import { fmtINR } from '../data/db';
 
 export function PayrollPage() {
   const { db, setDB, openModal, closeModal, toast } = useApp();
