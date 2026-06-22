@@ -1,5 +1,5 @@
 // ============================================================
-// ELEGANT ERP — MOCK DATA STORE
+// BELLIZIA ERP — MOCK DATA STORE
 // ============================================================
 
 import type { DB } from './types';
@@ -136,12 +136,12 @@ export function createInitialDB(): DB {
     ],
 
     users: [
-      { id: 'USR-01', name: 'Priya Varma', role: 'Admin / Owner', email: 'priya@elegantcaters.in', phone: '+91 90000 10001', status: 'Active' },
-      { id: 'USR-02', name: 'Suresh Kumar', role: 'Store Manager', email: 'suresh@elegantcaters.in', phone: '+91 90000 10002', status: 'Active', godown: 'Kochi Main Godown' },
-      { id: 'USR-03', name: 'Latha Menon', role: 'Store Manager', email: 'latha@elegantcaters.in', phone: '+91 90000 10003', status: 'Active', godown: 'TVM Storage Unit' },
-      { id: 'USR-04', name: 'Thomas Abraham', role: 'HR', email: 'thomas@elegantcaters.in', phone: '+91 90000 10004', status: 'Active' },
-      { id: 'USR-05', name: 'Sreelakshmi R', role: 'Site Manager', email: 'sreelakshmi@elegantcaters.in', phone: '+91 98470 44556', status: 'Active' },
-      { id: 'USR-06', name: 'Anand Das', role: 'Accounts', email: 'anand@elegantcaters.in', phone: '+91 90000 10006', status: 'Active' },
+      { id: 'USR-01', name: 'Priya Varma', role: 'Admin / Owner', email: 'priya@belliziacaters.in', phone: '+91 90000 10001', status: 'Active' },
+      { id: 'USR-02', name: 'Suresh Kumar', role: 'Store Manager', email: 'suresh@belliziacaters.in', phone: '+91 90000 10002', status: 'Active', godown: 'Kochi Main Godown' },
+      { id: 'USR-03', name: 'Latha Menon', role: 'Store Manager', email: 'latha@belliziacaters.in', phone: '+91 90000 10003', status: 'Active', godown: 'TVM Storage Unit' },
+      { id: 'USR-04', name: 'Thomas Abraham', role: 'HR', email: 'thomas@belliziacaters.in', phone: '+91 90000 10004', status: 'Active' },
+      { id: 'USR-05', name: 'Sreelakshmi R', role: 'Site Manager', email: 'sreelakshmi@belliziacaters.in', phone: '+91 98470 44556', status: 'Active' },
+      { id: 'USR-06', name: 'Anand Das', role: 'Accounts', email: 'anand@belliziacaters.in', phone: '+91 90000 10006', status: 'Active' },
     ],
 
     promotionRules: [

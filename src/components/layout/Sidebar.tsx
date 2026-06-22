@@ -30,9 +30,9 @@ export function Sidebar() {
     <aside className="sidebar" id="sidebar">
       {/* Brand */}
       <div className="sidebar-brand">
-        <div className="brand-mark">E</div>
+        <div className="brand-mark">B</div>
         <div className="brand-text">
-          <div className="brand-name">Elegant</div>
+          <div className="brand-name">Bellizia</div>
           <div className="brand-sub">Caters &amp; Events ERP</div>
         </div>
       </div>

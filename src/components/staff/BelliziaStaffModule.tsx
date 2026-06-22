@@ -1,11 +1,11 @@
 // =============================================================================
-// ElegantStaffModule.tsx
+// BelliziaStaffModule.tsx
 //
 // Self-contained staff management module.
 // Stack: React 18+, TypeScript, Tailwind CSS v3
 // UI primitives: ../ui/ui-components (no Shadcn dependency)
 //
-// Exports: default ElegantStaffModule
+// Exports: default BelliziaStaffModule
 // =============================================================================
 
 import { useState, useMemo } from "react";
@@ -490,10 +490,10 @@ function ApplicationsPanel({ applications, onApprove, onReject }: ApplicationsPa
 }
 
 // =============================================================================
-// ElegantStaffModule  ← default export
+// BelliziaStaffModule  ← default export
 // =============================================================================
 
-export default function ElegantStaffModule() {
+export default function BelliziaStaffModule() {
   const [staff, setStaff] = useState<StaffMember[]>(initialStaff);
   const [applications, setApplications] = useState<ShiftApplication[]>(initialApplications);
   const [view, setView] = useState<ViewState>({ screen: "list" });
@@ -540,7 +540,7 @@ export default function ElegantStaffModule() {
           <div className="h-7 w-7 rounded-md bg-slate-900 flex items-center justify-center">
             <Flower2 className="h-4 w-4 text-white" />
           </div>
-          <span className="font-semibold text-sm text-slate-900 tracking-tight">Elegant</span>
+          <span className="font-semibold text-sm text-slate-900 tracking-tight">Bellizia</span>
         </div>
 
         {/* Nav */}

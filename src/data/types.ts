@@ -1,5 +1,5 @@
 // ============================================================
-// ELEGANT ERP — TYPE DEFINITIONS
+// BELLIZIA ERP — TYPE DEFINITIONS
 // ============================================================
 
 export type StaffTier = 'Normal' | 'Premium' | 'Extreme Premium';

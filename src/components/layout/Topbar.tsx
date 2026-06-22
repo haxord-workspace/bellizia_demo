@@ -8,7 +8,7 @@ export function Topbar() {
     <header className="topbar">
       <div className="topbar-left">
         <div className="page-title">{meta.t}</div>
-        <div className="page-breadcrumb">Elegant / {meta.b}</div>
+        <div className="page-breadcrumb">Bellizia / {meta.b}</div>
       </div>
       <div className="topbar-right">
         <div className="search-box">🔍 <span>Search anything…</span></div>
