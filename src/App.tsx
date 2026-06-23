@@ -22,10 +22,13 @@ import { GodownsPage } from './pages/GodownsPage';
 import { StockPage } from './pages/StockPage';
 import { VehiclesPage } from './pages/VehiclesPage';
 import { VehicleTripsPage } from './pages/VehicleTripsPage';
+import { ReturnsPage } from './pages/ReturnsPage';
 import { UsersPage } from './pages/UsersPage';
 import { SiteSharingPage } from './pages/SiteSharingPage';
 import { WhatsappPage } from './pages/WhatsappPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { MyEventsPage } from './pages/MyEventsPage';
+import { VerificationPage } from './pages/VerificationPage';
 
 function AppContent() {
   const { currentPage } = useApp();
@@ -48,10 +51,13 @@ function AppContent() {
       case 'stock': return <StockPage />;
       case 'vehicles': return <VehiclesPage />;
       case 'trips': return <VehicleTripsPage />;
+      case 'returns': return <ReturnsPage />;
       case 'users': return <UsersPage />;
       case 'sitesharing': return <SiteSharingPage />;
       case 'whatsapp': return <WhatsappPage />;
       case 'settings': return <SettingsPage />;
+      case 'myevents': return <MyEventsPage />;
+      case 'verification': return <VerificationPage />;
       default:
         return (
           <div className="empty-state">
