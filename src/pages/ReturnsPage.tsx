@@ -309,7 +309,6 @@ export function ReturnsPage() {
   const [returns, setReturns] = useState<ReturnEntry[]>(INITIAL_RETURNS);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('All');
-  const [expandedStats, setExpandedStats] = useState(true);
 
   const filtered = returns.filter(r => {
     const matchSearch = r.eventName.toLowerCase().includes(search.toLowerCase()) ||
